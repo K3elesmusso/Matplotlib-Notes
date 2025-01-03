@@ -1,0 +1,202 @@
+Matplotlib, 
+Python'da popüler bir veri görselleştirme kütüphanesidir. Genellikle Python'da statik, etkileşimli ve animasyonlu görselleştirmeler oluşturmak için kullanılır. Matplotlib, yalnızca birkaç satır kodla grafikler, histogramlar, çubuk grafikler, dağılım grafikleri vb. oluşturmanıza olanak tanır.
+pip install matplotlib = matplotlib indirmek için
+from matplotlib import pyplot = Pyplot’u import ediyor.
+plt.plot(x_ekseni , y_ekseni) = İki eksenli plot oluşturur
+plt.show() = plotu  gösterir
+plt.title() = Grafiğe başlık ekler
+plt.xlabel() = x e isim verir
+plt.ylabel() = y ye isim verir
+plt.legend() = açıklama ekler
+plt.plot(x_data, y_data2, label=’Açıklama’ = Çizgilerin ne anlama geldiğini yazıyorsun
+fmt = ‘[marker][line][color]’ = çizgi türü ve renkleri belirler
+- ‘-’ : Solid line style (tek parça) 
+- ‘—’ : Dashed line style (kesikli) 
+- ‘b’ : Blue (mavi) - ‘g’ : Green (yeşil) 
+- ‘r’ : Red (kırmızı) 
+- ‘c’ : Cyan (cam göbeği) 
+- ‘m’ : Magenta (eğri mor) 
+- ‘y’ : Yellow (sarı) 
+- ‘k’ : Black (siyah) 
+- ‘w’ : White (beyaz)
+plt.plot(x_data, y_data2, color='k', linewidth=3, linestyle='—', label='Açıklama') = Çizgi kalınlığını değiştirmek için `linewidth` parametresini kullanabiliriz
+`plt.tight_layout()`  = İki grafik arasındaki boşluğu ayarlamak için kullanabiliriz
+print(plt.style.available) = Mevcut kullanılabilir stilleri görmek için
+plt.style.use('stil_adi') = stil değiştirmek için
+`plt.xkcd()` = grafiği çizgi roman tarzında gösterebiliriz.
+plt.savefig('kaydetmek_istediğimiz_ad.png') = Grafiği kaydetmek için
+plt.bar(x_data, y_data2, color='k', linestyle='—', label='Açıklama') Bar grafiklerini çizmek için 
+plt.xticks(ticks=x_endeksi, labels=x_çizgisi) = x eksenindeki tüm değerleri görmek için
+import csv  = CSV modülünü kullanarak dosyaları açabiliriz. -> with open('data.csv') as csv_file:
+CSV dosyasındaki her satırı bir Python sözlüğü (dictionary) olarak okuruz. 
+row = next(csv_reader) —> Listedeki ilk öğeyi alır. Veriyi ayırmak için: print(row['LanguagesWorkedWith'].split(';')) 
+Burada `LanguagesWorkedWith` anahtarındaki veriyi `split` komutu ile ayırıyoruz.
+
+from collections import 
+Counter language_counter = Counter() 
+= Programlama dillerinin sayımını yapmak için Counter sınıfını kullanabiliriz. 
+
+for row in csv_reader: language_counter.update(row['LanguagesWorkedWith'].split(';'))  = her satırdaki programlama dillerini sayar
+language_counter.most_common(15) = En çok kullanılan 15 dili görmek için
+
+languages = [] 
+popularity = []
+=Diller ve kullanıcı sayısını ayrı listelere almak için.
+
+for item in language_counter.items(): 
+languages.append(item[0]) —> Dilleri verir 
+popularity.append(item[1]) —> Kullanıcı sayılarını verir
+
+plt.barh(languages, popularity) = dillerin popülerliklerini bir yatay bar grafiği ile göstermek için 
+
+```python slice = [60, 40] plt.pie(slice) = Dilimlere değer eklemek için
+
+labels = ['Grup A', 'Grup B']
+plt.pie(slice, labels=labels)
+=Dilimlere etiket eklemek için
+
+
+
+colors = ['blue', 'red']
+plt.pie(slice, labels=labels, colors=colors)
+= Dilimlere renk eklemek için
+
+plt.pie(slice, labels=labels, colors=colors, wedgeprops={'edgecolor': 'black'})
+= Dilimlerin etrafına siyah çerçeve eklemek için
+
+explode = [0, 0, 0, 0.1, 0]
+=Dilimlerden birini öne çıkarmak için shadow=True
+
+plt.pie(slice, labels=labels, colors=colors, wedgeprops={'edgecolor': 'black'}, explode=explode, shadow=True)
+=Dilimlerin gölgesini eklemek için
+
+plt.pie(slice, labels=labels, colors=colors, wedgeprops={'edgecolor': 'black'}, explode=explode, shadow=True, startangle=90)
+=Başlangıç açısını değiştirmek için startangle
+
+plt.pie(slice, labels=labels, colors=colors, wedgeprops={'edgecolor': 'black'}, explode=explode, shadow=True, autopct='%1.1f%%')
+=Dilimlerin yüzdelik değerlerini göstermek için
+
+plt.stackplot(minutes, player1, player2, player3)
+=Stack plots Verilen verileri üst üste göstermek için
+
+plt.legend(loc='upper left')
+=Açıklama kısmını sola taşımak için
+
+
+
+
+
+import pandas as pd
+data = pd.read_csv('data.csv')
+=Filling Area on Line Plots Pandas kütüphanesini import ederek veri analizi yapmak için
+
+ages = data['Age']
+dev_salaries = data['All_Devs']
+py_salaries = data['Python']
+js_salaries = data['JavaScript']
+=Yaşlar ve diğer veriler üzerinde işlem yapmak
+
+plt.plot(ages, dev_salaries, color='#444444', linestyle='—', label='All Devs')
+plt.fill_between(ages, py_salaries, alpha=0.25)
+=Grafiği çizmek ve araları doldurmak için
+
+overall_median = 57145
+plt.fill_between(ages, py_salaries, overall_median, alpha=0.25)
+=Medyan değeri ile arayı doldurmak için
+
+plt.hist(ages, bins=5, edgecolor='black')
+=Histogramlar Veriyi eşit kutucuklara böler
+
+bins = [10, 20, 30, 40, 50]
+=Kendi aralıklarımızı belirleyebiliriz
+
+log = True
+=Logaritmik olarak göstermek için
+
+plt.axvline(median_age, color='red', label='Age Median')
+=Medyan çizgisi eklemek için
+
+
+plt.scatter(x, y, s=100, c='green', edgecolor='black', linewidth=1, alpha=0.75)
+=Scatter Plots X ve Y arasındaki ilişkiyi görmek için
+
+cbar = plt.colorbar()
+cbar.set_label('Satisfaction')
+=Yoğunluk bilgisi için renk skalası eklemek
+
+from datetime import datetime, timedelta
+from matplotlib import dates as mpl_dates
+plt.plot_date(dates, y, linestyle='solid')
+=Plotting Time Series Data Zaman serisi verisi çizmek için
+
+plc.gcf().autofmt_xdate()
+date_format = mpl_dates.DateFormatter('%b, %d %Y')
+plt.gca().xaxis.set_major_formatter(date_format)
+=Tarihi daha okunabilir yapmak için
+
+ Plotting Live Data in Real Time = Verilerin sürekli olarak güncellenmesi ve bu verilerin grafiksel olarak, anlık bir şekilde görselleştirilmesi işlemidir.
+
+import random
+from itertools import count
+import matplotlib.pyplot as plt
+
+x_vals = []
+y_vals = []
+index = count()
+def animate(i):
+    x_vals.append(next(index))
+    y_vals.append(random.randint(0, 5)) 
+= A ile B arasındaki rastgele bir tam sayı döner.
+ani = FuncAnimation(plt.gcf(), animate, interval=1000)  
+= "gcf" (get current figure), aktif figür üzerinde işlem yapar. interval yeni verilerin gelme süresini belirler.
+
+plt.cla()  
+=Aynı figür üzerinde yeni grafikler çizerken, önceki grafiklerin temizlenmesini sağlar.
+
+plt.tight_layout()  
+=Grafiklerin düzgün bir şekilde yerleştirilmesini sağlar.
+
+plt.gca  
+= "get current axis" anlamına gelir, şu anda aktif olan ekseni döndürür.
+
+plt.subplots()  
+=Bir veya daha fazla alt grafik oluşturur.
+
+ax = "axis" (ekseni) temsil eden yaygın bir kısaltmadır. Grafik çizildiğinde eksen objesini ifade eder.
+
+fig = Grafik çizim alanını temsil eden nesnedir.
+
+fig, ax = plt.subplots()  
+=Grafikler için eksen ve şekil nesnelerini oluşturur.
+
+ax.plot(ages, py_saleries, label='Python')  
+=Grafikleri çizmek için ax objesi kullanılır.
+
+fig, (ax1, ax2) = plt.subplots(nrows=2, ncols=1)  
+=2 grafik (subplot) oluşturur.
+
+ax1.plot(ages, py_saleries, label='Python')  
+=1. grafik için ax1, 2. grafik için ax2 kullanılır.
+
+sharex=True  
+=İki grafik için tek bir x ekseni paylaşılır.
+
+fig1.savefig('fig1.png')  
+=Figure 1'i kaydetmek için.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
